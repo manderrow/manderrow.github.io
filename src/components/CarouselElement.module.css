@@ -1,0 +1,23 @@
+.carousel__item {
+  scroll-snap-align: center;
+  width: 80%;
+  flex-shrink: 0;
+  scale: 90%;
+
+  transition: scale 0.2s ease;
+}
+
+.carousel__item[data-active="true"] {
+  scale: 100%;
+}
+
+.item__container {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

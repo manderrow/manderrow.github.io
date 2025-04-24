@@ -1,0 +1,106 @@
+/* Page styles */
+
+h2 {
+  font-size: 2.25rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+main {
+  padding: 1em;
+}
+
+/* Header styles */
+
+header {
+  min-height: 70dvh;
+  display: grid;
+  grid-template-areas:
+    "text"
+    "text"
+    ".";
+  position: relative;
+  padding: 0.5em;
+  gap: 1em;
+  align-items: center;
+  justify-items: center;
+}
+
+.header__text {
+  grid-area: text;
+  text-align: center;
+}
+
+.header__text h1 {
+  font-size: 7rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.25em;
+  font-family: var(--font-heading);
+}
+
+.header__text p {
+  font-size: 1.25rem;
+  text-wrap: balance;
+}
+
+.header__scrollBtn {
+  background-color: transparent;
+  border: none;
+  padding: 0.5em 1em;
+  font-size: 2rem;
+}
+
+.header__games {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* overflow: hidden; */
+}
+
+.header__game {
+  width: 2rem;
+  height: 2rem;
+  background-color: black;
+  position: absolute;
+  border-radius: 4px;
+  offset-distance: var(--offset);
+  /* offset-distance: 0%; */
+  animation: orbit 1s linear infinite;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Screenshots carousel */
+
+/* Features section */
+
+.features {
+  max-width: var(--viewing-width);
+  margin: auto;
+}
+
+.features__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1em;
+}
+
+.features__card {
+  padding: 1em;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+/* Graphs section */
+
+/* CTA section */

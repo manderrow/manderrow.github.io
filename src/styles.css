@@ -1,0 +1,35 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --font: "Inter", Avenir, Helvetica, Arial, sans-serif;
+  --font-heading: "Montserrat", Avenir, Helvetica, Arial, sans-serif;
+
+  font-family: var(--font);
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --viewing-width: 1200px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+@media screen AND (max-width: 700px) {
+  :root {
+    font-size: 12px;
+  }
+}

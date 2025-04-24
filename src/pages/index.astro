@@ -1,11 +1,88 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import "./index.css";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Carousel from "../components/Carousel";
+import ElegantGameIcon from "../components/ElegantGameIcon.astro";
+
+import gameSelectImg from "../assets/img/game_select.png";
+import profileImg from "../assets/img/profiles.png";
+import modsImg from "../assets/img/mods.png";
+
+import lethalLogo from "../assets/img/games/lethal-company.png";
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  page={{
+    title: "Manderrow - mod manager",
+    description: "The most well-made and comprehensive mod manager for Thunderstore",
+  }}
+>
+  <header>
+    <div class="header__text">
+      <h1>Manderrow</h1>
+      <p>The most well-made and comprehensive mod manager for Thunderstore.</p>
+    </div>
+    <ul class="header__games">
+      <ElegantGameIcon point={[40, 30]} img={lethalLogo} />
+    </ul>
+
+    <button class="header__scrollBtn">↓</button>
+  </header>
+
+  <main>
+    <section class="screenshots">
+      <Carousel
+        navDots
+        elements={[
+          {
+            id: "game_select",
+            image: { src: gameSelectImg.src, alt: "Game select screen" },
+          },
+          {
+            id: "profiles",
+            image: { src: profileImg.src, alt: "Profiles screen" },
+          },
+          {
+            id: "mods",
+            image: { src: modsImg.src, alt: "Mod list screen" },
+          },
+        ]}
+        client:load
+      />
+    </section>
+    <section class="features">
+      <h2>Features</h2>
+
+      <ul class="features__cards">
+        <li class="features__card">
+          <h3>Performant</h3>
+        </li>
+        <li class="features__card">
+          <h3>Fully Cross-platform</h3>
+        </li>
+        <li class="features__card">
+          <h3>Multilingual</h3>
+        </li>
+        <li class="features__card">
+          <h3>For Developers</h3>
+        </li>
+      </ul>
+    </section>
+    <section class="graphs">
+      <h2>Graphs</h2>
+    </section>
+    <section class="cta">
+      <h2>Download Now</h2>
+    </section>
+    <section class="credits">
+      <h2>Credits</h2>
+    </section>
+  </main>
+
+  <script>
+    document.querySelector(".header__scrollBtn")!.addEventListener("click", () => {
+      document.querySelector("section")!.scrollIntoView();
+    });
+  </script>
 </Layout>
