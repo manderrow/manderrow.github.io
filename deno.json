@@ -12,7 +12,6 @@
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
-    "jsxImportSource": "solid-js",
     "verbatimModuleSyntax": true
   },
   "unstable": ["sloppy-imports"]
