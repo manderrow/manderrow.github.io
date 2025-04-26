@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const { point, img } = Astro.props;
-const inflationConstant = Math.E;
+const inflationConstant = Math.PI;
 const target = [0, 0];
 
 // const ma = (controlPoint[1] - point[1]) / (controlPoint[0] - point[0]);
@@ -25,9 +25,10 @@ function fixAngle(angleDeg: number) {
 }
 const RAD_TO_DEG = 180 / Math.PI;
 const DEG_TO_RAD = Math.PI / 180;
+const PI_OVER_TWO = 90 * DEG_TO_RAD;
 
-const deltaX = target[0] - point[0];
-const deltaY = target[1] - point[1];
+const deltaX = point[0] - target[0];
+const deltaY = point[1] - target[1];
 
 const minDiameter = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 const radius = (minDiameter / 2) * inflationConstant;
@@ -35,24 +36,17 @@ const radius = (minDiameter / 2) * inflationConstant;
 const midpointX = (target[0] + point[0]) / 2;
 const midpointY = (target[1] + point[1]) / 2;
 
-const angleThetaRadians = Math.acos((minDiameter ** 2 + radius ** 2 - radius ** 2) / (2 * minDiameter * radius));
+// cosine law, a = minDiameter, b = radius, c = radius
+const angleThetaRadians = Math.acos(minDiameter ** 2 / (2 * minDiameter * radius));
 const offset = radius * Math.sin(angleThetaRadians);
 
-const anglePhiRadians = 90 * DEG_TO_RAD - angleThetaRadians;
+const anglePhiRadians = PI_OVER_TWO - (PI_OVER_TWO - Math.atan(midpointX / midpointY));
 const opposite = Math.sin(anglePhiRadians) * offset;
 const adjacent = Math.cos(anglePhiRadians) * offset;
 
 const negative = point[0] < target[0];
 const x = midpointX + (negative ? -adjacent : adjacent);
-const y = midpointY - opposite;
-
-// const reciprocalSlopeX = -deltaY;
-// const reciprocalSlopeY = deltaX;
-// const ratio = Math.sqrt(reciprocalSlopeX ** 2 + reciprocalSlopeY ** 2) / offset;
-// const x1 = reciprocalSlopeX * ratio + midpointX;
-// const y1 = reciprocalSlopeY * ratio + midpointY;
-// const x2 = -reciprocalSlopeX * ratio + midpointX;
-// const y2 = -reciprocalSlopeY * ratio + midpointY;
+const y = midpointY + (negative ? opposite : -opposite);
 
 const center = [x, y];
 
