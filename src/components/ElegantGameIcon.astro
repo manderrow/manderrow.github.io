@@ -10,22 +10,14 @@ const { point, img } = Astro.props;
 const inflationConstant = Math.PI;
 const target = [0, 0];
 
-// const ma = (controlPoint[1] - point[1]) / (controlPoint[0] - point[0]);
-// const mb = (target[1] - controlPoint[1]) / (target[0] - controlPoint[0]);
-// https://paulbourke.net/geometry/circlesphere/
-// const x =
-//   (ma * mb * (point[1] - target[1]) + mb * (point[0] + controlPoint[0]) - ma * (controlPoint[0] + target[0])) /
-//   (2 * (mb - ma));
-// const y = -(1 / ma) * (x - (point[0] + controlPoint[0]) / 2) + (point[1] + controlPoint[1]) / 2;
-
-// const center = [x, y];
-// const radius = Math.sqrt((center[0] - target[0]) ** 2 + (center[1] - target[1]) ** 2);
 function fixAngle(angleDeg: number) {
   return center[0] > point[0] ? -(angleDeg + 90) - 90 : angleDeg;
 }
 const RAD_TO_DEG = 180 / Math.PI;
 const DEG_TO_RAD = Math.PI / 180;
 const PI_OVER_TWO = 90 * DEG_TO_RAD;
+
+// Visualization at https://www.desmos.com/calculator/dmkqegc1kv
 
 const deltaX = point[0] - target[0];
 const deltaY = point[1] - target[1];
@@ -63,7 +55,7 @@ const percentEnd = (angleEnd / 360) * 100;
     "--offset": `${percentEnd}%`,
   }}
   data-start-percent={percentStart}
-  data-end-percent={percentStart}
+  data-end-percent={percentEnd}
 >
   <Image src={img} alt={""} />
 </li>
