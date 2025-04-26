@@ -24,6 +24,7 @@ function fixAngle(angleDeg: number) {
   return center[0] > point[0] ? -(angleDeg + 90) - 90 : angleDeg;
 }
 const RAD_TO_DEG = 180 / Math.PI;
+const DEG_TO_RAD = Math.PI / 180;
 
 const deltaX = target[0] - point[0];
 const deltaY = target[1] - point[1];
@@ -34,22 +35,26 @@ const radius = (minDiameter / 2) * inflationConstant;
 const midpointX = (target[0] + point[0]) / 2;
 const midpointY = (target[1] + point[1]) / 2;
 
-const angle = RAD_TO_DEG * Math.acos((minDiameter ** 2 + radius ** 2 - radius ** 2) / (2 * minDiameter * radius));
-const offset = radius * (RAD_TO_DEG * Math.sin(angle));
+const angleThetaRadians = Math.acos((minDiameter ** 2 + radius ** 2 - radius ** 2) / (2 * minDiameter * radius));
+const offset = radius * Math.sin(angleThetaRadians);
 
-const reciprocalSlopeX1 = -deltaY;
-const reciprocalSlopeY1 = deltaX;
-const reciprocalSlopeX2 = deltaY;
-const reciprocalSlopeY2 = -deltaX;
+const anglePhiRadians = 90 * DEG_TO_RAD - angleThetaRadians;
+const opposite = Math.sin(anglePhiRadians) * offset;
+const adjacent = Math.cos(anglePhiRadians) * offset;
 
-const ratio = Math.sqrt(reciprocalSlopeX1 ** 2 + reciprocalSlopeY1 ** 2) / offset;
-const x1 = reciprocalSlopeX1 * ratio + midpointX;
-const y1 = reciprocalSlopeY1 * ratio + midpointY;
+const negative = point[0] < target[0];
+const x = midpointX + (negative ? -adjacent : adjacent);
+const y = midpointY - opposite;
 
-const x2 = reciprocalSlopeX2 * ratio + midpointX;
-const y2 = reciprocalSlopeY2 * ratio + midpointY;
+// const reciprocalSlopeX = -deltaY;
+// const reciprocalSlopeY = deltaX;
+// const ratio = Math.sqrt(reciprocalSlopeX ** 2 + reciprocalSlopeY ** 2) / offset;
+// const x1 = reciprocalSlopeX * ratio + midpointX;
+// const y1 = reciprocalSlopeY * ratio + midpointY;
+// const x2 = -reciprocalSlopeX * ratio + midpointX;
+// const y2 = -reciprocalSlopeY * ratio + midpointY;
 
-const center = x1 > target[0] ? [x1, y1] : [x2, y2];
+const center = [x, y];
 
 const angleStart = fixAngle(RAD_TO_DEG * Math.asin((center[1] - point[1]) / radius));
 const percentStart = (angleStart / 360) * 100;
