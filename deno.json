@@ -12,6 +12,8 @@
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js",
     "verbatimModuleSyntax": true
   },
   "unstable": ["sloppy-imports"]
