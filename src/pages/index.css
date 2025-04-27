@@ -52,34 +52,6 @@ header {
   font-size: 2rem;
 }
 
-.header__games {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  /* overflow: hidden; */
-}
-
-.header__game {
-  width: 2rem;
-  height: 2rem;
-  background-color: black;
-  position: absolute;
-  border-radius: 4px;
-  offset-distance: var(--offset);
-  /* offset-distance: 0%; */
-  animation: orbit 1s linear infinite;
-}
-
-@keyframes orbit {
-  from {
-    offset-distance: 0%;
-  }
-
-  to {
-    offset-distance: 100%;
-  }
-}
-
 /* Screenshots carousel */
 
 /* Features section */

@@ -3,13 +3,18 @@ import "./index.css";
 
 import Layout from "../layouts/Layout.astro";
 import Carousel from "../components/Carousel";
-import ElegantGameIcon from "../components/ElegantGameIcon.astro";
+import ElegantGameIcons from "../components/ElegantGameIcons";
 
 import gameSelectImg from "../assets/img/game_select.png";
 import profileImg from "../assets/img/profiles.png";
 import modsImg from "../assets/img/mods.png";
 
 import lethalLogo from "../assets/img/games/lethal-company.png";
+import repoLogo from "../assets/img/games/repo.png";
+import roundsLogo from "../assets/img/games/rounds.png";
+import contentWarningLogo from "../assets/img/games/content-warning.png";
+import valheimLogo from "../assets/img/games/valheim.png";
+import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 ---
 
 <Layout
@@ -23,15 +28,42 @@ import lethalLogo from "../assets/img/games/lethal-company.png";
       <h1>Manderrow</h1>
       <p>The most well-made and comprehensive mod manager for Thunderstore.</p>
     </div>
-    <ul class="header__games">
-      <ElegantGameIcon point={[10, 30]} img={lethalLogo} />
-    </ul>
+
+    <ElegantGameIcons
+      id="header-icons"
+      icons={[
+        {
+          point: [65, -50],
+          img: lethalLogo,
+        },
+        {
+          point: [-80, -60],
+          img: repoLogo,
+        },
+        {
+          point: [85, -20],
+          img: roundsLogo,
+        },
+        {
+          point: [-60, -16],
+          img: contentWarningLogo,
+        },
+        {
+          point: [25, -28],
+          img: valheimLogo,
+        },
+        {
+          point: [-20, -30],
+          img: riskOfRainLogo,
+        },
+      ]}
+    />
 
     <button class="header__scrollBtn">↓</button>
   </header>
 
   <main>
-    <section class="screenshots">
+    <section class="screenshots" id="convergence-target">
       <Carousel
         navDots
         elements={[
@@ -79,10 +111,28 @@ import lethalLogo from "../assets/img/games/lethal-company.png";
       <h2>Credits</h2>
     </section>
   </main>
-
-  <script>
-    document.querySelector(".header__scrollBtn")!.addEventListener("click", () => {
-      document.querySelector("section")!.scrollIntoView();
-    });
-  </script>
 </Layout>
+
+<script>
+  import { ICON_CLASS } from "../components/ElegantGameIcons";
+
+  document.querySelector(".header__scrollBtn")!.addEventListener("click", () => {
+    document.querySelector("section")!.scrollIntoView();
+  });
+
+  const view = document.getElementById("convergence-target")!;
+  const icons = document.querySelectorAll<any>("#header-icons li." + ICON_CLASS);
+
+  function reposition() {
+    const animationPercent = Math.min(1, window.scrollY / view.offsetTop / 0.5);
+
+    for (const icon of icons) {
+      const negative = icon.dataset.negative === "false";
+      icon.style.setProperty("--offset", `${animationPercent}`);
+      icon.style.setProperty("--rotation", `${(negative ? 20 : -20) + animationPercent * (negative ? -40 : 40)}deg`);
+    }
+  }
+
+  document.addEventListener("scroll", reposition, { passive: true });
+  reposition();
+</script>

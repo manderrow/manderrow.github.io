@@ -1,0 +1,53 @@
+.icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: black;
+  position: absolute;
+  border-radius: 4px;
+  offset-path: circle(var(--radius) at calc(50% + var(--x)) calc(100% + var(--y)));
+  offset-distance: calc((var(--start) + var(--diff) * var(--offset)) * 100%);
+  transition: offset-distance 80ms linear;
+  offset-rotate: var(--rotation);
+  /* animation: orbit 3s linear infinite; */
+}
+
+.test {
+  position: absolute;
+  width: calc(var(--radius) * 2);
+  height: calc(var(--radius) * 2);
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  translate: var(--x) var(--y);
+}
+
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  translate: var(--x) var(--y);
+  border-radius: 50%;
+  z-index: 100;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
