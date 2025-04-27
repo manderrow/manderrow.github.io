@@ -61,8 +61,6 @@ function ElegantGameIcon({ point, img }: GameIconProps) {
   const angleEnd = fixAngle(RAD_TO_DEG * Math.asin((center[1] - target[1]) / radius));
   const percentEnd = angleEnd / 360;
 
-  console.log(img.src, center);
-
   return (
     <>
       <li
