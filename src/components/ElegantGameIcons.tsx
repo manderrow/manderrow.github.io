@@ -8,7 +8,7 @@ interface GameIconProps {
   img: ImageMetadata;
 }
 
-const inflationConstant = 3;
+const inflationConstant = 2.7;
 const target = [0, 0];
 const RAD_TO_DEG = 180 / Math.PI;
 const PI_OVER_TWO = Math.PI / 2;
@@ -28,7 +28,6 @@ export default function ElegantGameIcons({ id, icons }: { id: string; icons: Gam
 function ElegantGameIcon({ point, img }: GameIconProps) {
   function fixAngle(angleDeg: number) {
     return (point[0] < 0 ? -(angleDeg + 90) - 90 : angleDeg) + 180;
-    // return angleDeg;
   }
 
   // Visualization at https://www.desmos.com/calculator/bcwzbmdvod
