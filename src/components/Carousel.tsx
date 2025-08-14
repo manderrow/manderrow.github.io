@@ -8,95 +8,122 @@ function getEdgeRange(number: number, elements: CarouselData[]) {
   return elements.slice(number < 0 ? number : 0, number < 0 ? undefined : number);
 }
 
+const ILLUSION_ELEMENTS = 2;
 export default function Carousel({ navDots, elements }: { elements: CarouselData[]; navDots: boolean }) {
-  let carouselView!: HTMLDivElement;
-  const idToIndex: Map<string, number> = new Map(elements.map((el, i) => [el.id, i]));
-  const idToElement: Map<string, HTMLLIElement> = new Map();
+  let carouselView: HTMLDivElement | undefined;
+  let carouselScroll: HTMLUListElement | undefined;
 
-  const [selected, setSelected] = createSignal<string>(elements[0].id);
+  const [selected, setSelected] = createSignal<number>(0);
   const [observer, setObserver] = createSignal<IntersectionObserver>();
+  const [scrolling, setScrolling] = createSignal<boolean>(false);
+  const [illusionPointer, setIllusionPointer] = createSignal<number | undefined>(undefined);
 
-  function slideCarouselTo(id: string) {
-    idToElement.get(id)!.scrollIntoView({ behavior: "smooth", block: "center" });
+  function slideCarouselTo(index: number, instant?: boolean) {
+    carouselScroll!.scrollTo({
+      behavior: instant ? "instant" : "smooth",
+      left: (index + ILLUSION_ELEMENTS) * (carouselScroll!.clientWidth * 0.8), // item width 80%, TODO change to CSS var
+    });
   }
 
   function changeSlide(delta: number) {
-    const currentIndex = idToIndex.get(selected())!;
+    const newIndex = selected() + delta;
+    const isIllusion = newIndex > elements.length - 1 || newIndex < 0;
+    const illusionTarget = newIndex < 0 ? elements.length - 1 : 0;
 
-    let newIndex = currentIndex + delta;
-    if (newIndex >= elements.length) {
-      newIndex = 0; // Loop from front to back
-    } else if (newIndex < 0) {
-      newIndex = elements.length - 1; // Loop from back to front
+    setIllusionPointer(!isIllusion ? newIndex : illusionTarget);
+    slideCarouselTo(newIndex);
+
+    if (isIllusion) {
+      carouselScroll!.querySelector<HTMLLIElement>(`li[data-index="${illusionTarget}"]`)!.dataset.active = "true";
     }
+  }
 
-    idToElement.get(elements[newIndex].id)!.scrollIntoView({ behavior: "smooth", block: "center" });
+  function scrollStart() {
+    setScrolling(true);
+  }
+
+  function scrollEnd() {
+    const realTarget = illusionPointer();
+    if (realTarget === undefined) return;
+
+    slideCarouselTo(realTarget, true);
+
+    setScrolling(false);
   }
 
   onMount(() => {
+    carouselScroll!.addEventListener("scroll", scrollStart);
+    carouselScroll!.addEventListener("scrollend", scrollEnd);
+
     setObserver(
       new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setSelected((entry.target as HTMLElement).dataset.carouselId!);
+              setSelected(parseInt((entry.target as HTMLElement).dataset.index!));
             }
           });
         },
         {
-          root: carouselView,
+          root: carouselView!,
           threshold: 0.5,
         }
       )
     );
 
-    const items = carouselView.querySelectorAll<HTMLLIElement>(`li[data-illusion="false"]`);
+    const items = carouselView!.querySelectorAll<HTMLLIElement>(`li`);
     items.forEach((item) => observer()!.observe(item));
+
+    slideCarouselTo(selected(), true);
   });
 
   onCleanup(() => {
+    if (carouselScroll) {
+      carouselScroll.removeEventListener("scrollstart", scrollStart);
+      carouselScroll.removeEventListener("scrollend", scrollEnd);
+    }
     observer()?.disconnect();
   });
 
   return (
     <div class={styles.carousel__container}>
       <div class={styles.carousel__view} ref={carouselView}>
-        <button type="button" class={styles.carousel__sliderBtn} onClick={() => changeSlide(-1)}>
+        <button type="button" class={styles.carousel__sliderBtn} onClick={() => changeSlide(-1)} disabled={scrolling()}>
           ←
         </button>
 
-        <ul class={styles.carousel__scroll}>
-          {[...getEdgeRange(-2, elements), ...elements, ...getEdgeRange(2, elements)].map((item, i, array) => {
-            const isIllusion = i < 2 || i >= array.length - 2;
+        <ul class={styles.carousel__scroll} ref={carouselScroll}>
+          {[
+            ...getEdgeRange(-ILLUSION_ELEMENTS, elements),
+            ...elements,
+            ...getEdgeRange(ILLUSION_ELEMENTS, elements),
+          ].map((item, i, array) => {
+            const isIllusion = i < ILLUSION_ELEMENTS || i >= array.length - ILLUSION_ELEMENTS;
             return (
               <CarouselElement
                 {...item}
+                index={i - ILLUSION_ELEMENTS}
                 illusion={isIllusion}
-                active={() => selected() == item.id}
-                ref={(element: HTMLLIElement) => {
-                  if (!isIllusion) {
-                    idToElement.set(item.id, element);
-                  }
-                }}
+                active={() => selected() == i - ILLUSION_ELEMENTS}
               />
             );
           })}
         </ul>
 
-        <button type="button" class={styles.carousel__sliderBtn} onClick={() => changeSlide(1)}>
+        <button type="button" class={styles.carousel__sliderBtn} onClick={() => changeSlide(1)} disabled={scrolling()}>
           →
         </button>
       </div>
 
       <Show when={navDots}>
         <nav class={styles.carousel__nav}>
-          {elements.map((el) => (
+          {elements.map((el, i) => (
             <button
               type="button"
               class={styles.carouselNav__btn}
-              data-active={selected() == el.id}
+              data-active={selected() == i}
               onClick={() => {
-                slideCarouselTo(el.id);
+                slideCarouselTo(i);
               }}
             >
               <div class={styles.nav__btnInner} aria-hidden />

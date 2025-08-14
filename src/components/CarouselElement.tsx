@@ -8,14 +8,20 @@ export interface CarouselData {
 }
 
 export interface CarouselElementProps extends CarouselData {
+  index: number;
   illusion: boolean;
   active: Accessor<boolean>;
-  ref: (element: HTMLLIElement) => void;
 }
 
-export default function CarouselElement({ id, image, illusion, active, ref }: CarouselElementProps) {
+export default function CarouselElement({ id, image, illusion, active, index }: CarouselElementProps) {
   return (
-    <li class={styles.carousel__item} data-illusion={illusion} data-carousel-id={id} data-active={active()} ref={ref}>
+    <li
+      class={styles.carousel__item}
+      data-illusion={illusion}
+      data-carousel-id={id}
+      data-index={index}
+      data-active={active()}
+    >
       <div class={styles.item__container}>
         {image != null ? <img src={image.src} alt={image.alt} class={styles.carousel__image} /> : <slot />}
       </div>
