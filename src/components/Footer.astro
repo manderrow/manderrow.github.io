@@ -1,1 +1,21 @@
-<footer></footer>
+---
+import styles from "./Footer.module.css";
+
+import logo from "../assets/img/logo/Manderrow logo.svg";
+---
+
+<footer class={styles.footer}>
+  <div class={styles.footer__content}>
+    <img src={logo.src} alt="Manderrow logo" class={styles.footer__logo} />
+
+    <ul class={styles.footer__links}>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
+    </ul>
+
+    <div class={styles.footer__copyright}>
+      <p>&copy; Manderrow {new Date().getFullYear()}</p>
+    </div>
+  </div>
+</footer>

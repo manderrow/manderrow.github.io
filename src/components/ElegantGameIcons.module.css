@@ -12,7 +12,7 @@
   border-radius: 4px;
   offset-path: circle(var(--radius) at calc(50% + var(--x)) calc(100% + var(--y)));
   offset-distance: calc((var(--start) + var(--diff) * var(--offset)) * 100%);
-  transition: offset-distance 80ms linear;
+  transition: offset-distance 64ms linear;
   offset-rotate: var(--rotation);
   /* animation: orbit 3s linear infinite; */
 }

@@ -11,6 +11,10 @@ main {
   padding: 1em;
 }
 
+section {
+  padding: 1em;
+}
+
 /* Header styles */
 
 header {
@@ -25,6 +29,17 @@ header {
   gap: 1em;
   align-items: center;
   justify-items: center;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  top: 0%;
+  translate: 0% -65%;
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), transparent 70%);
+  pointer-events: none;
 }
 
 .header__text {
@@ -50,9 +65,122 @@ header {
   border: none;
   padding: 0.5em 1em;
   font-size: 2rem;
+  animation: bob 0.8s ease infinite alternate;
+}
+
+@keyframes bob {
+  from {
+    translate: 0% -10%;
+  }
+
+  to {
+    translate: 0% 10%;
+  }
 }
 
 /* Screenshots carousel */
+
+.carousel-logo,
+.carousel-logo__borderGlow {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 5rem;
+  aspect-ratio: 1 / 1;
+  isolation: isolate;
+}
+
+.carousel-logo {
+  --border-width: 3px;
+  --border-radius: 0.5rem;
+  padding: var(--border-width);
+  border-radius: var(--border-radius);
+  background-color: var(--clr-neutral-80);
+  overflow: hidden;
+  z-index: 1;
+  transition: background-color 0.2s ease, box-shadow 1s ease;
+  box-shadow: 0 0 1em -0.2em hsl(var(--clr-primary-50));
+}
+
+.carousel-logo img {
+  --padding-width: 4px;
+  padding: var(--padding-width);
+  border-radius: calc(var(--border-radius) - var(--padding-width));
+  background-color: var(--clr-neutral-85);
+  width: 100%;
+}
+
+.carousel-logo::before,
+.carousel-logo__borderGlow::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  z-index: -1;
+  background-image: var(--bgImg);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: glowRotate 3s linear infinite paused;
+}
+
+.carousel-logo[data-active="true"]::before,
+.carousel-logo[data-active="true"] + .carousel-logo__borderGlow::before {
+  animation-play-state: running;
+  opacity: 1;
+}
+
+.carousel-logo__borderGlow {
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  filter: blur(1em);
+}
+
+@keyframes glowRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.screenshots {
+  position: relative;
+  padding-top: 0;
+
+  --bgImg: conic-gradient(
+    red 0deg,
+    red 20deg,
+    transparent 30deg 50deg,
+    orange 60deg,
+    orange 80deg,
+    transparent 90deg 110deg,
+    yellow 120deg,
+    yellow 140deg,
+    transparent 150deg 170deg,
+    green 180deg,
+    green 200deg,
+    transparent 210deg 230deg,
+    blue 240deg,
+    blue 260deg,
+    transparent 270deg 290deg,
+    indigo 300deg,
+    indigo 320deg,
+    transparent 330deg 350deg,
+    red 360deg
+  );
+}
+
+.screenshots__carousel {
+  border: 1px solid var(--clr-neutral-80);
+  border-radius: 1rem;
+  padding: 1em 0;
+  padding-top: 2em;
+  background-color: var(--clr-neutral-90);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.screenshots__carousel img {
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2);
+}
 
 /* Features section */
 
@@ -63,16 +191,56 @@ header {
 
 .features__cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: 1em;
 }
 
 .features__card {
+  --border-width: 1px;
+  border: var(--border-width) solid transparent;
+  background-image: radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(155, 155, 155, 0.1),
+      transparent 12rem
+    ),
+    linear-gradient(15deg, var(--clr-neutral-90), var(--clr-neutral-85));
+  background-clip: border-box, padding-box;
+  background-attachment: fixed, local;
+  background-size: cover, auto;
+
   padding: 1em;
-  border: 1px solid black;
   border-radius: 8px;
+
+  position: relative;
+}
+
+.features__card::after {
+  content: "";
+  position: absolute;
+  background-image: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    var(--clr-neutral-45) 1rem,
+    var(--clr-neutral-65) 2rem,
+    transparent 9rem
+  );
+  background-attachment: fixed;
+  background-size: cover;
+  inset: calc(-1 * var(--border-width));
+  z-index: -1;
+  border-radius: inherit;
 }
 
 /* Graphs section */
 
 /* CTA section */
+
+.cta {
+  margin: 0 -1em;
+  min-height: 30dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Credits section */

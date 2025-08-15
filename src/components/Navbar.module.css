@@ -1,0 +1,33 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  isolation: isolate;
+  height: var(--navbar-height);
+  border-bottom: 1px solid var(--clr-neutral-85);
+  backdrop-filter: blur(12px);
+  padding: 0.25em 0;
+}
+
+.navbar__list {
+  max-width: var(--viewing-width);
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__list li {
+  height: 100%;
+}
+
+.navbar__list li:first-child img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.navbar__list li:last-child {
+  margin-left: auto;
+}

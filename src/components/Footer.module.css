@@ -1,0 +1,32 @@
+footer {
+  background-color: var(--clr-neutral-85);
+  border-top: 1px solid var(--clr-neutral-80);
+  background-image: radial-gradient();
+}
+
+.footer__content {
+  display: grid;
+  grid-template-areas:
+    "logo links links"
+    "copyright copyright copyright";
+  align-content: stretch;
+  min-height: 30dvh;
+  padding: 2em;
+  max-width: var(--viewing-width);
+  margin: 0 auto;
+}
+
+.footer__logo {
+  grid-area: logo;
+  width: 6rem;
+}
+
+.footer__links {
+  grid-area: links;
+}
+
+.footer__copyright {
+  grid-area: copyright;
+  justify-self: center;
+  align-self: self-end;
+}

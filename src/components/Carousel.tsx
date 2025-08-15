@@ -9,7 +9,15 @@ function getEdgeRange(number: number, elements: CarouselData[]) {
 }
 
 const ILLUSION_ELEMENTS = 2;
-export default function Carousel({ navDots, elements }: { elements: CarouselData[]; navDots: boolean }) {
+export default function Carousel({
+  navDots,
+  elements,
+  containerClass,
+}: {
+  elements: CarouselData[];
+  navDots: boolean;
+  containerClass?: string;
+}) {
   let carouselView: HTMLDivElement | undefined;
   let carouselScroll: HTMLUListElement | undefined;
 
@@ -43,18 +51,16 @@ export default function Carousel({ navDots, elements }: { elements: CarouselData
   }
 
   function scrollEnd() {
+    setScrolling(false);
+
     const realTarget = illusionPointer();
     if (realTarget === undefined) return;
 
     slideCarouselTo(realTarget, true);
-
-    setScrolling(false);
+    setIllusionPointer(undefined);
   }
 
   onMount(() => {
-    carouselScroll!.addEventListener("scroll", scrollStart);
-    carouselScroll!.addEventListener("scrollend", scrollEnd);
-
     setObserver(
       new IntersectionObserver(
         (entries) => {
@@ -75,6 +81,9 @@ export default function Carousel({ navDots, elements }: { elements: CarouselData
     items.forEach((item) => observer()!.observe(item));
 
     slideCarouselTo(selected(), true);
+
+    carouselScroll!.addEventListener("scroll", scrollStart);
+    carouselScroll!.addEventListener("scrollend", scrollEnd);
   });
 
   onCleanup(() => {
@@ -86,7 +95,7 @@ export default function Carousel({ navDots, elements }: { elements: CarouselData
   });
 
   return (
-    <div class={styles.carousel__container}>
+    <div class={`${styles.carousel__container} ${containerClass}`}>
       <div class={styles.carousel__view} ref={carouselView}>
         <button type="button" class={styles.carousel__sliderBtn} onClick={() => changeSlide(-1)} disabled={scrolling()}>
           ←
@@ -121,7 +130,7 @@ export default function Carousel({ navDots, elements }: { elements: CarouselData
             <button
               type="button"
               class={styles.carouselNav__btn}
-              data-active={selected() == i}
+              data-active={selected() == i || illusionPointer() == i}
               onClick={() => {
                 slideCarouselTo(i);
               }}

@@ -17,11 +17,23 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  --navbar-height: 32px;
   --viewing-width: 1200px;
+
+  scroll-padding-top: var(--navbar-height);
+}
+
+body {
+  background-color: var(--clr-neutral-95);
+  color: var(--clr-neutral-05);
 }
 
 ul {
   list-style-type: none;
+}
+
+button {
+  color: var(--clr-neutral-05);
 }
 
 button:hover {

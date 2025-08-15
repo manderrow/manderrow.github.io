@@ -2,18 +2,19 @@
   display: block;
   margin: auto;
   width: 90%;
+  max-width: 1700px;
 }
 
 .carousel__scroll {
   display: flex;
   align-items: center;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   width: 100%;
   height: 100%;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  /* scrollbar-width: none; */
+  scrollbar-width: thin;
   position: relative;
 }
 
@@ -54,10 +55,14 @@
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 50%;
-  border: 1px solid gray;
+  border: 1px solid var(--clr-neutral-65);
   background-color: transparent;
+  margin-top: 0.5em;
+
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .carouselNav__btn[data-active="true"] .nav__btnInner {
-  background-color: gray;
+  background-color: var(--clr-primary-60);
+  border-color: var(--clr-primary-60);
 }

@@ -1,4 +1,6 @@
 ---
+import credits from "../collections/credits.json" with { type: "json" };
+
 import "./index.css";
 
 import Layout from "../layouts/Layout.astro";
@@ -9,6 +11,7 @@ import gameSelectImg from "../assets/img/game_select.png";
 import profileImg from "../assets/img/profiles.png";
 import modsImg from "../assets/img/mods.png";
 
+import logo from "../assets/img/logo/Manderrow logo.svg";
 import lethalLogo from "../assets/img/games/lethal-company.png";
 import repoLogo from "../assets/img/games/repo.png";
 import roundsLogo from "../assets/img/games/rounds.png";
@@ -62,9 +65,15 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
     <button class="header__scrollBtn">↓</button>
   </header>
 
-  <main>
-    <section class="screenshots" id="convergence-target">
+  <main id="convergence-target">
+    <section class="screenshots" id="screenshots">
+      <div class="carousel-logo">
+        <img src={logo.src} alt="Manderrow logo" />
+      </div>
+      <div class="carousel-logo__borderGlow" aria-hidden="true"></div>
+
       <Carousel
+        containerClass="screenshots__carousel"
         navDots
         elements={[
           {
@@ -83,32 +92,71 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
         client:load
       />
     </section>
-    <section class="features">
+    <section class="features" id="features">
       <h2>Features</h2>
 
       <ul class="features__cards">
         <li class="features__card">
           <h3>Performant</h3>
-        </li>
-        <li class="features__card">
-          <h3>Fully Cross-platform</h3>
+
+          <p>Built with speed and efficiency.</p>
         </li>
         <li class="features__card">
           <h3>Multilingual</h3>
+
+          <p>Supports multiple languages (English, Spanish, French, Chinese) out-of-the-box.</p>
+        </li>
+        <li class="features__card">
+          <h3>Fully Cross-platform</h3>
+
+          <p>First-class support for Windows, macOS, and Linux.</p>
+        </li>
+        <li class="features__card">
+          <h3>Powerful UI</h3>
+
+          <p>Intuitive and user-friendly interface while still providing powerful features.</p>
+        </li>
+        <li class="features__card">
+          <h3>Active Development</h3>
+
+          <p>Unforeseen features planned for the future.</p>
         </li>
         <li class="features__card">
           <h3>For Developers</h3>
+
+          <p>With developer oriented tools baked in.</p>
         </li>
       </ul>
     </section>
-    <section class="graphs">
+    <section class="graphs" id="graphs">
       <h2>Graphs</h2>
+      <p>Let the numbers speak for themselves</p>
     </section>
-    <section class="cta">
+    <section class="cta" id="cta">
       <h2>Download Now</h2>
+
+      <a href="/download" class="cta__button">Download</a>
     </section>
-    <section class="credits">
+    <section class="credits" id="credits">
       <h2>Credits</h2>
+
+      <ol class="credits__list">
+        {
+          credits.map((author) => (
+            <li>
+              <span>{author.name}</span>
+              <span>&bull;</span>
+              {author.link ? (
+                <a href={author.link} target="_blank" rel="noopener noreferrer">
+                  {author.role}
+                </a>
+              ) : (
+                <span>{author.role}</span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
     </section>
   </main>
 </Layout>
@@ -117,14 +165,21 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
   import { ICON_CLASS } from "../components/ElegantGameIcons";
 
   document.querySelector(".header__scrollBtn")!.addEventListener("click", () => {
-    document.querySelector("section")!.scrollIntoView();
+    document.querySelector("section")!.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   });
 
+  // Header game icons
   const view = document.getElementById("convergence-target")!;
-  const icons = document.querySelectorAll<any>("#header-icons li." + ICON_CLASS);
+  const icons = document.querySelectorAll<HTMLLIElement>("#header-icons li." + ICON_CLASS);
+  const carouselLogo = document.querySelector<HTMLDivElement>(".carousel-logo")!;
 
   function reposition() {
     const animationPercent = Math.min(1, window.scrollY / view.offsetTop / 0.5);
+
+    carouselLogo.dataset.active = animationPercent === 1 ? "true" : "false";
 
     for (const icon of icons) {
       const negative = icon.dataset.negative === "false";
@@ -135,4 +190,12 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 
   document.addEventListener("scroll", reposition, { passive: true });
   reposition();
+
+  // Features glow
+  const featureCards = document.querySelector<HTMLUListElement>(".features__cards")!;
+
+  document.addEventListener("mousemove", (e) => {
+    featureCards.style.setProperty("--mouse-x", `${e.x}px`);
+    featureCards.style.setProperty("--mouse-y", `${e.y}px`);
+  });
 </script>

@@ -16,6 +16,7 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "chart.js": "^4.5.0",
     "solid-js": "^1.9.9"
   },
   "devDependencies": {
