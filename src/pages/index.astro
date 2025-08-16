@@ -30,6 +30,8 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
     <div class="header__text">
       <h1>Manderrow</h1>
       <p>The most well-made and comprehensive mod manager for Thunderstore.</p>
+
+      <a href="/download">Download</a>
     </div>
 
     <ElegantGameIcons
@@ -61,14 +63,14 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
         },
       ]}
     />
-
-    <button class="header__scrollBtn">↓</button>
   </header>
 
   <main id="convergence-target">
     <section class="screenshots" id="screenshots">
       <div class="carousel-logo">
-        <img src={logo.src} alt="Manderrow logo" />
+        <div class="carousel-logo__inner">
+          <img src={logo.src} alt="Manderrow logo" />
+        </div>
       </div>
       <div class="carousel-logo__borderGlow" aria-hidden="true"></div>
 
@@ -99,7 +101,7 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
         <li class="features__card">
           <h3>Performant</h3>
 
-          <p>Built with speed and efficiency.</p>
+          <p>Built with speed and efficiency in mind.</p>
         </li>
         <li class="features__card">
           <h3>Multilingual</h3>
@@ -114,23 +116,53 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
         <li class="features__card">
           <h3>Powerful UI</h3>
 
-          <p>Intuitive and user-friendly interface while still providing powerful features.</p>
+          <p>Intuitive and user-friendly interface without compromising functionality.</p>
         </li>
         <li class="features__card">
           <h3>Active Development</h3>
 
-          <p>Unforeseen features planned for the future.</p>
+          <p>Never before seen features planned for the future.</p>
         </li>
         <li class="features__card">
           <h3>For Developers</h3>
 
-          <p>With developer oriented tools baked in.</p>
+          <p>With developer-oriented tools baked in.</p>
         </li>
       </ul>
     </section>
     <section class="graphs" id="graphs">
-      <h2>Graphs</h2>
+      <h2>Versus Competitors</h2>
       <p>Let the numbers speak for themselves</p>
+
+      <div class="graphs__grid">
+        <div class="graphs__item">
+          <div class="graphs__chart" id="memory-chart"></div>
+          <div class="graphs__info">
+            <h3>Memory usage</h3>
+            <p>Compared with a loaded mod index of Lethal Company (45k mods).</p>
+          </div>
+        </div>
+        <div class="graphs__item">
+          <div class="graphs__chart" id="loading-chart"></div>
+          <div class="graphs__info">
+            <h3>Loading time</h3>
+            <p>
+              Compared with the time to load the Lethal Company mod index (45k mods) on a XXX Kb/s download connection.
+            </p>
+          </div>
+        </div>
+        <div class="graphs__item">
+          <div class="graphs__chart"></div>
+          <div class="graphs__info">
+            <h3></h3>
+            <p>Data for graph 1</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="graphs__disclaimer">
+        Tests conducted on a desktop computer with a XXX CPU, XX GB of RAM at XXXX MT/s, and XXX SSD.
+      </p>
     </section>
     <section class="cta" id="cta">
       <h2>Download Now</h2>
@@ -163,13 +195,6 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 
 <script>
   import { ICON_CLASS } from "../components/ElegantGameIcons";
-
-  document.querySelector(".header__scrollBtn")!.addEventListener("click", () => {
-    document.querySelector("section")!.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  });
 
   // Header game icons
   const view = document.getElementById("convergence-target")!;
