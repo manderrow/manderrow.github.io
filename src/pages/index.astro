@@ -22,7 +22,7 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 
 <Layout
   page={{
-    title: "Manderrow - mod manager",
+    title: "Manderrow",
     description: "The most well-made and comprehensive mod manager for Thunderstore",
   }}
 >
@@ -136,14 +136,18 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 
       <div class="graphs__grid">
         <div class="graphs__item">
-          <div class="graphs__chart" id="memory-chart"></div>
+          <div class="graphs__chart" id="memory-chart">
+            <img src="/graphs/memory.svg" alt="Memory graph" />
+          </div>
           <div class="graphs__info">
             <h3>Memory usage</h3>
             <p>Compared with a loaded mod index of Lethal Company (45k mods).</p>
           </div>
         </div>
         <div class="graphs__item">
-          <div class="graphs__chart" id="loading-chart"></div>
+          <div class="graphs__chart" id="loading-chart">
+            <img src="/graphs/load_time.svg" alt="Load time graph" />
+          </div>
           <div class="graphs__info">
             <h3>Loading time</h3>
             <p>
@@ -152,16 +156,22 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
           </div>
         </div>
         <div class="graphs__item">
-          <div class="graphs__chart"></div>
+          <div class="graphs__chart" id="launch-chart">
+            <img src="/graphs/launch_time.svg" alt="Launch time graph" />
+          </div>
           <div class="graphs__info">
-            <h3></h3>
-            <p>Data for graph 1</p>
+            <h3>Launch time</h3>
+            <p>Compared with the time to practically interactive (past blocking loading screens)</p>
           </div>
         </div>
       </div>
 
       <p class="graphs__disclaimer">
-        Tests conducted on a desktop computer with a XXX CPU, XX GB of RAM at XXXX MT/s, and XXX SSD.
+        *Mid-tier PC tests conducted on a desktop computer with a XXX CPU, XX GB of RAM at XXXX MT/s, and XXX SSD on
+        Windows XX.
+        <br />
+        **Low-end PC tests conducted on a desktop computer with a XXX CPU, XX GB of RAM at XXXX MT/s, and XXX SSD on Windows
+        XX.
       </p>
     </section>
     <section class="cta" id="cta">

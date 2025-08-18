@@ -8,6 +8,7 @@ footer {
   display: grid;
   grid-template-areas:
     "logo links links"
+    "socials socials socials"
     "copyright copyright copyright";
   align-content: stretch;
   min-height: 30dvh;
@@ -23,6 +24,11 @@ footer {
 
 .footer__links {
   grid-area: links;
+}
+
+.footer__socials {
+  grid-area: socials;
+  justify-self: center;
 }
 
 .footer__copyright {
