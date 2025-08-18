@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Memory Usage",
+    "yLabel": "Memory usage (MB)",
+    "data": {
+      "r2modman": [11, 11],
+      "Gale": [11, 11],
+      "Manderrow": [11, 11]
+    }
+  },
+  {
+    "name": "Mod Index Loading Time",
+    "yLabel": "Time (seconds)",
+    "data": {
+      "r2modman": [11, 11],
+      "Gale": [11, 11],
+      "Manderrow": [11, 11]
+    }
+  },
+  {
+    "name": "App Launch Time",
+    "yLabel": "Time (seconds)",
+    "data": {
+      "r2modman": [11, 11],
+      "Gale": [11, 11],
+      "Manderrow": [11, 11]
+    }
+  }
+]

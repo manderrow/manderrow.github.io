@@ -16,16 +16,20 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "chart.js": "^4.5.0",
     "solid-js": "^1.9.9"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/solid-js": "^5.1.0",
-    "astro": "^5.12.9"
+    "astro": "^5.12.9",
+    "highcharts-export-server": "^5.0.0",
+    "typescript": "^5.9.2"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
       "esbuild",
+      "highcharts-export-server",
+      "puppeteer",
       "sharp"
     ]
   }
