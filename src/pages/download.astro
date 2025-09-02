@@ -1,9 +1,79 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+import "./download.css";
+
+const GITHUB_RELEASES_PREFIX = "https://github.com/manderrow/manderrow/releases/";
+const GITHUB_RELEASES_LINK = GITHUB_RELEASES_PREFIX + "latest/download/";
+const PLATFORM_FILENAMES = {
+  windows: { installer: "Manderrow-Setup.exe", "MSI installer": "Manderrow.msi", portable: "Manderrow.zip" },
+  macos: { executable: "Manderrow.dmg", portable: "Manderrow.zip" },
+  linux: { executable: "Manderrow.AppImage", portable: "Manderrow.zip" },
+};
 ---
 
 <Layout page={{ title: "Manderrow - Download", description: "Download Manderrow now." }}>
   <header>
-    <h1>Download</h1>
+    <div class="header__content">
+      <h1>Download</h1>
+
+      <p id="auto-msg">Your download should start automatically. Otherwise, see below.</p>
+
+      <div class="download__btns">
+        <a id="primary-download-btn" class="primary" href="#downloads" base-link>Download Now</a>
+        <a href="#downloads" base-link>More Options</a>
+      </div>
+    </div>
   </header>
+  <main id="downloads" class="downloads">
+    <h2 class="downloads__header">All Downloads</h2>
+
+    <ul class="downloads__list">
+      {
+        Object.entries(PLATFORM_FILENAMES).map(([platform, filenames]) => (
+          <li>
+            <p>{platform}</p>
+            <div class="download__btns">
+              {Object.entries(filenames).map(([type, filename]) => (
+                <a href={GITHUB_RELEASES_LINK + filename} class="download__btn" base-link>
+                  {type} (.{filename.split(".").pop()})
+                </a>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a href={GITHUB_RELEASES_PREFIX} target="_blank" rel="noopener noreferrer">View all releases on GitHub</a>
+  </main>
 </Layout>
+
+<script>
+  const MAIN_DOWNLOAD_BTN = document.querySelector<HTMLLinkElement>("#primary-download-btn")!;
+
+  // Detect operating system and change download button link
+
+  const userAgent = window.navigator.userAgent;
+
+  if (userAgent.includes("Win")) {
+    MAIN_DOWNLOAD_BTN.href = "/downloads/Manderrow-Setup.exe";
+  } else if (userAgent.includes("Mac")) {
+    MAIN_DOWNLOAD_BTN.href = "/downloads/Manderrow.dmg";
+  } else if (userAgent.includes("Linux")) {
+    MAIN_DOWNLOAD_BTN.href = "/downloads/Manderrow.AppImage";
+  }
+
+  // Auto-download check
+
+  const AUTO_DOWNLOAD_KEY = "auto";
+
+  const params = new URLSearchParams(window.location.search);
+  const AUTO_DOWNLOAD = params.get(AUTO_DOWNLOAD_KEY) != null;
+
+  if (AUTO_DOWNLOAD) {
+    params.delete(AUTO_DOWNLOAD_KEY);
+    history.replaceState(null, "", "?" + params.toString());
+    // MAIN_DOWNLOAD_BTN.click();
+  }
+</script>

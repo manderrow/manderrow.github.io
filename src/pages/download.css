@@ -1,0 +1,115 @@
+header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.header__content {
+  padding: 1em;
+  min-height: 35dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  max-width: var(--viewing-width);
+  margin: 0 auto;
+}
+
+.header__content h1 {
+  font-size: 3rem;
+}
+
+.header__content #auto-msg {
+  color: var(--clr-neutral-15);
+}
+
+header::before,
+header::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+header::before {
+  width: 40%;
+  top: 0;
+  left: 0;
+  transform: translate(-5%, -40%);
+  background-image: linear-gradient(15deg, var(--clr-primary-30), var(--clr-primary-60));
+}
+
+header::after {
+  width: 20%;
+  bottom: 0;
+  right: 0;
+  transform: translate(-10%, 40%);
+  background-image: linear-gradient(15deg, var(--clr-primary-75), var(--clr-primary-90));
+}
+
+main {
+  padding: 1em;
+}
+
+.downloads {
+  text-align: center;
+}
+
+.downloads > *:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.downloads__header {
+}
+
+.downloads__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--clr-neutral-85);
+  border: 1px solid var(--clr-neutral-80);
+  border-radius: 0.5em;
+  padding: 1em;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.downloads__list li {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.downloads__list p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  align-self: center;
+  text-align: initial;
+}
+
+.downloads__list li:not(:last-child) {
+  border-bottom: 1px solid var(--clr-neutral-80);
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.download__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.download__btns a {
+  color: var(--clr-neutral-10);
+  background-color: var(--clr-neutral-70);
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 100vmax;
+}
+
+.download__btns a:hover,
+.download__btns a:focus-visible {
+  background-color: var(--clr-neutral-80);
+}

@@ -21,6 +21,8 @@
   --viewing-width: 1200px;
 
   scroll-padding-top: var(--navbar-height);
+
+  scroll-behavior: smooth;
 }
 
 body {
@@ -28,8 +30,45 @@ body {
   color: var(--clr-neutral-05);
 }
 
+main {
+  min-height: 70dvh;
+}
+
 ul {
   list-style-type: none;
+}
+
+a:not([base-link]) {
+  position: relative;
+  color: var(--clr-primary-50);
+  text-decoration: none;
+}
+
+a:not([base-link]):hover,
+a:not([base-link]):focus-visible {
+  color: var(--clr-primary-60);
+}
+
+a:not([base-link])::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background-color: var(--clr-primary-60);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s;
+}
+
+a:hover::after,
+a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.primary {
+  background-color: var(--clr-primary-50);
 }
 
 button {

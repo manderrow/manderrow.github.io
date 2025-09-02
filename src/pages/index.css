@@ -71,10 +71,10 @@ header::before {
 .header__text p {
   font-size: 1.25rem;
   text-wrap: balance;
-  color: var(--clr-neutral-10);
+  color: var(--clr-neutral-15);
 }
 
-.header__text a {
+.downloadBtn {
   background-color: var(--clr-primary-40);
   color: var(--clr-neutral-05);
   padding: 0.35em 1em;
@@ -83,6 +83,11 @@ header::before {
   font-size: 1.5rem;
   text-decoration: none;
   transition: background-color 0.3s ease;
+}
+
+.downloadBtn:hover,
+.downloadBtn:focus-visible {
+  background-color: var(--clr-primary-50);
 }
 
 /* Screenshots carousel */
@@ -307,21 +312,44 @@ header::before {
 }
 
 .graphs__chart {
-  align-self: stretch;
+  border-radius: 1em;
+}
+
+.graphs__info {
+  padding: 1em;
+}
+
+.graphs__info h3 {
+  font-size: 2.5rem;
+  font-weight: 250;
+  margin-bottom: 0.5em;
+}
+
+.graphs__info p {
+  font-weight: 300;
+}
+
+.graphs__item:nth-child(even) .graphs__info {
+  text-align: right;
 }
 
 .graphs__item:nth-child(even) .graphs__chart {
   grid-column: 1 / -2;
+  justify-self: left;
+}
+
+.graphs__item:nth-child(odd) .graphs__info {
+  text-align: left;
 }
 
 .graphs__item:nth-child(odd) .graphs__chart {
   grid-column: 2 / -1;
+  justify-self: right;
 }
 
 /* CTA section */
 
 .cta {
-  margin: 0 -1em;
   min-height: 30dvh;
   display: flex;
   flex-direction: column;

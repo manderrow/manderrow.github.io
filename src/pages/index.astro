@@ -1,6 +1,4 @@
 ---
-import credits from "../collections/credits.json" with { type: "json" };
-
 import "./index.css";
 
 import Layout from "../layouts/Layout.astro";
@@ -18,6 +16,11 @@ import roundsLogo from "../assets/img/games/rounds.png";
 import contentWarningLogo from "../assets/img/games/content-warning.png";
 import valheimLogo from "../assets/img/games/valheim.png";
 import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
+
+import launchTimeGraph from "../assets/img/graphs/App Launch Time.svg";
+import memoryUsageGraph from "../assets/img/graphs/Memory Usage.svg";
+import indexLoadGraph from "../assets/img/graphs/Mod Index Loading Time.svg";
+import Image from "astro/components/Image.astro";
 ---
 
 <Layout
@@ -31,7 +34,7 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
       <h1>Manderrow</h1>
       <p>The most well-made and comprehensive mod manager for Thunderstore.</p>
 
-      <a href="/download">Download</a>
+      <a href="/download?auto" base-link class="downloadBtn">Download</a>
     </div>
 
     <ElegantGameIcons
@@ -136,18 +139,14 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
 
       <div class="graphs__grid">
         <div class="graphs__item">
-          <div class="graphs__chart" id="memory-chart">
-            <img src="/graphs/memory.svg" alt="Memory graph" />
-          </div>
+          <Image src={memoryUsageGraph} alt="Memory graph" class="graphs__chart" />
           <div class="graphs__info">
             <h3>Memory usage</h3>
             <p>Compared with a loaded mod index of Lethal Company (45k mods).</p>
           </div>
         </div>
         <div class="graphs__item">
-          <div class="graphs__chart" id="loading-chart">
-            <img src="/graphs/load_time.svg" alt="Load time graph" />
-          </div>
+          <Image src={indexLoadGraph} alt="Load time graph" class="graphs__chart" />
           <div class="graphs__info">
             <h3>Loading time</h3>
             <p>
@@ -156,9 +155,7 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
           </div>
         </div>
         <div class="graphs__item">
-          <div class="graphs__chart" id="launch-chart">
-            <img src="/graphs/launch_time.svg" alt="Launch time graph" />
-          </div>
+          <Image src={launchTimeGraph} alt="Launch time graph" class="graphs__chart" />
           <div class="graphs__info">
             <h3>Launch time</h3>
             <p>Compared with the time to practically interactive (past blocking loading screens)</p>
@@ -175,30 +172,14 @@ import riskOfRainLogo from "../assets/img/games/risk-of-rain.png";
       </p>
     </section>
     <section class="cta" id="cta">
-      <h2>Download Now</h2>
+      <h2>Get Manderrow Now</h2>
 
-      <a href="/download" class="cta__button">Download</a>
+      <a href="/download?auto" class="downloadBtn" base-link>Download</a>
     </section>
     <section class="credits" id="credits">
       <h2>Credits</h2>
 
-      <ol class="credits__list">
-        {
-          credits.map((author) => (
-            <li>
-              <span>{author.name}</span>
-              <span>&bull;</span>
-              {author.link ? (
-                <a href={author.link} target="_blank" rel="noopener noreferrer">
-                  {author.role}
-                </a>
-              ) : (
-                <span>{author.role}</span>
-              )}
-            </li>
-          ))
-        }
-      </ol>
+      <a href="/credits" class="credits__link">View all credits</a>
     </section>
   </main>
 </Layout>
