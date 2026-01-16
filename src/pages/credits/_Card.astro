@@ -1,0 +1,26 @@
+---
+import type { UnifiedCredit } from "../../types";
+
+interface Props {
+  contributor: UnifiedCredit;
+}
+
+const { contributor } = Astro.props;
+---
+
+<li>
+  <img src={contributor.picture_link} alt={contributor.name} style={{ height: "var(--pfp-height)" }} />
+
+  {
+    contributor.link ? (
+      <a href={contributor.link} target="_blank" rel="noopener noreferrer" data-name>
+        {contributor.name}
+      </a>
+    ) : (
+      <p data-name>{contributor.name}</p>
+    )
+  }
+  <p data-role>{contributor.role}</p>
+
+  {contributor.commits != null ? <p data-commits>{contributor.commits} commits</p> : null}
+</li>

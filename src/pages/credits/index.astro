@@ -1,0 +1,65 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Card from "./_Card.astro";
+import type { GithubApiContributorResponse, UnifiedCredit } from "../../types";
+
+import ghCreditOverrides from "../../collections/gh-credits-override.json" with { type: "json" };
+import specialCredits from "../../collections/credits-special.json" with { type: "json" };
+
+const ghCreditOverridesMap = new Map(ghCreditOverrides.map((override) => [override.githubId, override]));
+
+async function fetchGitHubContributors(): Promise<UnifiedCredit[]> {
+  const response = await fetch("https://api.github.com/repos/Manderrow/manderrow/contributors");
+
+  const data = (await response.json()) as GithubApiContributorResponse;
+  return data.map((contributor) => {
+    const potentialOverride = ghCreditOverridesMap.get(contributor.login);
+
+    return {
+      name: potentialOverride?.name ?? contributor.login,
+      role: potentialOverride?.role ?? "Contributor",
+      picture_link: contributor.avatar_url,
+      link: contributor.html_url,
+      core: potentialOverride != null,
+      commits: contributor.contributions,
+    };
+  });
+}
+
+const ghContributors = await fetchGitHubContributors();
+
+import "./credits.css";
+---
+
+<Layout page={{ title: "Manderrow - Credits", description: "Credits for Manderrow." }}>
+  <header>
+    <h1>Credits</h1>
+  </header>
+  <main>
+    <h2>Core Maintainers <hr /></h2>
+
+    <ol class="credits__list">
+      {
+        ghContributors
+          .filter((contributor) => contributor.core)
+          .map((contributor) => <Card contributor={contributor} />)
+      }
+    </ol>
+
+    <h2>GitHub Contributors <hr /></h2>
+
+    <ol class="credits__list">
+      {
+        ghContributors
+          .filter((contributor) => !contributor.core)
+          .map((contributor) => <Card contributor={contributor} />)
+      }
+    </ol>
+
+    <h2>Special Thanks <hr /></h2>
+
+    <ol class="credits__list">
+      {specialCredits.map((contributor) => <Card contributor={contributor} />)}
+    </ol>
+  </main>
+</Layout>

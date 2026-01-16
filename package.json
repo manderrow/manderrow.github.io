@@ -23,7 +23,7 @@
     "@astrojs/solid-js": "^5.1.3",
     "astro": "^5.16.11",
     "highcharts-export-server": "^5.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
