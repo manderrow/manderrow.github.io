@@ -59,6 +59,7 @@ h2 hr {
   object-fit: cover;
   margin: 0 auto;
   margin-top: calc(var(--pfp-height) / -2);
+  background-color: var(--clr-neutral-80);
   margin-bottom: 0.5em;
 }
 

@@ -1,0 +1,20 @@
+---
+// https://github.com/luluvia/astro-fontawesome/blob/main/packages/astro-fontawesome/src/FontAwesomeIcon.astro
+
+import { icon, type IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+interface Props {
+  icon: IconDefinition;
+  class?: string;
+}
+
+const { class: className, icon: iconName, ...rest } = Astro.props;
+
+const iconHtml = icon(iconName, {
+  attributes: rest,
+  classes: Array.from(new Set(className?.split(" "))),
+}).html;
+---
+
+<Fragment set:html={iconHtml} {...rest} />

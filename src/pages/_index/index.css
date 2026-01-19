@@ -22,6 +22,12 @@ main {
 section {
   padding: 1em 0;
   margin-bottom: 3em;
+  min-height: 30dvh;
+}
+
+.viewing-width {
+  max-width: var(--viewing-width);
+  margin: 0 auto;
 }
 
 /* Header styles */
@@ -111,7 +117,9 @@ header::before {
   background-color: var(--clr-neutral-80);
   overflow: hidden;
   z-index: 1;
-  transition: background-color 0.2s ease, box-shadow 1s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 1s ease;
   box-shadow: 0 0 1em -0.2em hsl(var(--clr-primary-50));
 }
 
@@ -208,11 +216,6 @@ header::before {
 
 /* Features section */
 
-.features {
-  max-width: var(--viewing-width);
-  margin-inline: auto;
-}
-
 .features__cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
@@ -222,11 +225,8 @@ header::before {
 .features__card {
   --border-width: 1px;
   border: var(--border-width) solid transparent;
-  background-image: radial-gradient(
-      circle at var(--mouse-x) var(--mouse-y),
-      rgba(155, 155, 155, 0.1),
-      transparent 12rem
-    ),
+  background-image:
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(155, 155, 155, 0.1), transparent 12rem),
     linear-gradient(15deg, var(--clr-neutral-90), var(--clr-neutral-85));
   background-clip: border-box, padding-box;
   background-attachment: fixed, local;
@@ -241,7 +241,8 @@ header::before {
 .features__card::after {
   content: "";
   position: absolute;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       circle at var(--mouse-x) var(--mouse-y),
       var(--clr-neutral-45) 1rem,
       var(--clr-neutral-65) 2rem,
@@ -274,8 +275,6 @@ header::before {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 1.5em;
-  max-width: var(--viewing-width);
-  margin: 0 auto;
 }
 
 .graphs__item {
@@ -350,9 +349,16 @@ header::before {
 /* CTA section */
 
 .cta {
-  min-height: 30dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* Credits section */
+
+.credits p {
+  color: var(--clr-neutral-15);
+  max-width: 65ch;
+  line-height: 1.5;
 }

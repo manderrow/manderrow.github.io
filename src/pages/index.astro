@@ -97,7 +97,7 @@ import Image from "astro/components/Image.astro";
         client:load
       />
     </section>
-    <section class="features" id="features">
+    <section class="features viewing-width" id="features">
       <h2>Features</h2>
 
       <ul class="features__cards">
@@ -137,7 +137,7 @@ import Image from "astro/components/Image.astro";
       <h2>Versus Competitors</h2>
       <p>Let the numbers speak for themselves</p>
 
-      <div class="graphs__grid">
+      <div class="graphs__grid viewing-width">
         <div class="graphs__item">
           <Image src={memoryUsageGraph} alt="Memory graph" class="graphs__chart" />
           <div class="graphs__info">
@@ -176,10 +176,13 @@ import Image from "astro/components/Image.astro";
 
       <a href="/download?auto" class="downloadBtn" base-link>Download</a>
     </section>
-    <section class="credits" id="credits">
+    <section class="credits viewing-width" id="credits">
       <h2>Credits</h2>
 
-      <a href="/credits" class="credits__link">View all credits</a>
+      <p>
+        Thank you to all the contributors and supporters who have made this project possible. For the ever-growing list,
+        see <a href="/credits" class="credits__link">here</a>.
+      </p>
     </section>
   </main>
 </Layout>

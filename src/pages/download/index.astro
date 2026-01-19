@@ -1,26 +1,44 @@
 ---
+import FaIcon from "../../components/FaIcon.astro";
 import Layout from "../../layouts/Layout.astro";
 
 import "./download.css";
 
-const GITHUB_RELEASES_PREFIX = "https://github.com/manderrow/manderrow/releases/";
+const GITHUB_RELEASES_PREFIX = "https://github.com/Manderrow/manderrow/releases/";
 const GITHUB_RELEASES_LINK = GITHUB_RELEASES_PREFIX + "latest/download/";
 const PLATFORM_FILENAMES = {
+  // Ordered by Steam Hardware Survey popularity
   windows: { installer: "Manderrow-Setup.exe", "MSI installer": "Manderrow.msi", portable: "Manderrow.zip" },
-  macos: { executable: "Manderrow.dmg", portable: "Manderrow.zip" },
   linux: { executable: "Manderrow.AppImage", portable: "Manderrow.zip" },
+  macos: { executable: "Manderrow.dmg", portable: "Manderrow.zip" },
 };
+
+import { faWindows, faLinux, faApple } from "@fortawesome/free-brands-svg-icons";
+
+function getPlatformIcon(platform: keyof typeof PLATFORM_FILENAMES) {
+  switch (platform.toLowerCase()) {
+    case "windows":
+      return faWindows;
+    case "macos":
+      return faApple;
+    case "linux":
+      return faLinux;
+  }
+}
 ---
 
 <Layout page={{ title: "Manderrow - Download", description: "Download Manderrow now." }}>
   <header>
     <div class="header__content">
-      <h1>Download</h1>
+      <h1 data-blobbed>Download</h1>
 
       <p id="auto-msg">Your download should start automatically. Otherwise, see below.</p>
 
       <div class="download__btns">
-        <a id="primary-download-btn" class="primary" href="#downloads" base-link>Download Now</a>
+        <a id="primary-download-btn" class="primary" href="#downloads" base-link>
+          <FaIcon icon={faWindows} />
+          Download Now</a
+        >
         <a href="#downloads" base-link>More Options</a>
       </div>
     </div>
@@ -28,22 +46,27 @@ const PLATFORM_FILENAMES = {
   <main id="downloads" class="downloads">
     <h2 class="downloads__header">All Downloads</h2>
 
-    <ul class="downloads__list">
-      {
-        Object.entries(PLATFORM_FILENAMES).map(([platform, filenames]) => (
-          <li>
-            <p>{platform}</p>
-            <div class="download__btns">
-              {Object.entries(filenames).map(([type, filename]) => (
-                <a href={GITHUB_RELEASES_LINK + filename} class="download__btn" base-link>
-                  {type} (.{filename.split(".").pop()})
-                </a>
-              ))}
-            </div>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="downloads__container" data-blobbed>
+      <ul class="downloads__list">
+        {
+          Object.entries(PLATFORM_FILENAMES).map(([platform, filenames]) => (
+            <li>
+              <FaIcon icon={getPlatformIcon(platform as keyof typeof PLATFORM_FILENAMES)!} class="os" />
+
+              <h3>{platform}</h3>
+
+              <div class="download__btns">
+                {Object.entries(filenames).map(([type, filename]) => (
+                  <a href={GITHUB_RELEASES_LINK + filename} class="download__btn" base-link>
+                    {type} (.{filename.split(".").pop()})
+                  </a>
+                ))}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
     <a href={GITHUB_RELEASES_PREFIX} target="_blank" rel="noopener noreferrer">View all releases on GitHub</a>
   </main>
